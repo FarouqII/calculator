@@ -1,0 +1,55 @@
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: "Poppins-Regular";
+    src: url(Poppins-Regular.ttf);
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 7.5rem;
+    background-color: #EDE8F5;
+    color: #3D52A0;
+    font-family: "Poppins-Regular";
+}
+
+.calculator {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 600px;
+    width: 400px;
+    max-width: 100%;
+    background-color: #ADBBDA;
+    border-radius: 25px;
+    gap: 1rem;
+}
+
+.screen {
+    width: 80%;
+    height: 20%;
+    background-color: #8697C4;
+    border: 1px solid white;
+    border-radius: 15px;
+}
+
+.keypad {
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 80%;
+    height: 60%;
+    border: 1px solid white;
+}
+
+button {
+    border-radius: 50%;
+    height: 60px;
+    width: 60px;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
