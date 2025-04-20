@@ -11,12 +11,23 @@ const numbers = document.querySelectorAll(".number");
 
 //Other variables
 let equalButton = false;
-let equation = 0;
 let currentEquation = [];
 
 operators.forEach(button => button.addEventListener("click", () => addToScreen(button.textContent)));
 numbers.forEach(button => button.addEventListener("click", () => addToScreen(button.textContent)));
-equals.addEventListener("click", () => calculate(currentEquation[0], currentEquation[2], currentEquation[1]));
+equals.addEventListener("click", () => {
+    if (screen.textContent == "") alert("Display empty!");
+    else calculate(currentEquation[0], currentEquation[2], currentEquation[1]);
+});
+clear.addEventListener("click", () => {
+    screen.textContent = "";
+    currentEquation = [];
+});
+dlt.addEventListener("click", () => {
+    screen.textContent = "";
+    currentEquation.pop();
+    currentEquation.forEach(item => screen.textContent += item);
+})
 
 
 function addToScreen(buttonContent) {
@@ -56,10 +67,16 @@ function calculate(one, two, operator) {
                 currentEquation = [result];
                 break;
             case ('÷'):
-                result = operandOne / operandTwo;
+                if (operandTwo == 0) {
+                    alert("Can't divide by 0!");
+                    break;
+                }
+                else {
+                    result = operandOne / operandTwo;
                 screen.textContent = result;
                 currentEquation = [result];
                 break;
+                }
         }
     }
 }
