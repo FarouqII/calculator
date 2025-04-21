@@ -17,7 +17,10 @@ operators.forEach(button => button.addEventListener("click", () => operatorButto
 numbers.forEach(button => button.addEventListener("click", () => numberButtons(button.textContent)));
 equals.addEventListener("click", () => {
     if (screen.textContent == "") alert("Display empty!");
-    else calculate(currentEquation[0], currentEquation[2], currentEquation[1]);
+    else {
+        calculate(currentEquation[0], currentEquation[2], currentEquation[1]);
+        currentEquation = [];
+    }
 });
 clear.addEventListener("click", () => {
     screen.textContent = "";
@@ -30,6 +33,7 @@ dlt.addEventListener("click", () => {
 })
 
 function numberButtons(buttonContent) {
+    if (currentEquation.length == 0) screen.textContent = "";
     if (currentEquation.length == 0 || isNaN(Number(currentEquation[currentEquation.length - 1]))) {
         currentEquation.push(Number(buttonContent));
     } else {
