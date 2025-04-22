@@ -71,9 +71,9 @@ button:hover {
     cursor:pointer;
 }
 
-#equal {
+#equal, #zero {
     grid-column: span 2;
-    width: 87.5%;
+    width: 90%;
     border-radius: 30px;
     transition: 0.2s ease-in-out;
 }
@@ -81,4 +81,17 @@ button:hover {
 #equal:hover {
     background-color: var(--dark-blue);
     color: var(--light-blue);
+}
+
+.number, .operator, #decimal, #delete, #clear {
+    transition: 0.175s ease-in-out;
+}
+
+.number:hover, .operator:hover, #decimal:hover {
+    color: var(--dark-blue);
+}
+
+#delete:hover, #clear:hover {
+    background-color: var(--lavender);
+    color: var(--dark-blue);
 }

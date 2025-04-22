@@ -28,7 +28,11 @@ clear.addEventListener("click", () => {
 });
 dlt.addEventListener("click", () => {
     screen.textContent = "";
-    currentEquation.pop();
+    if (currentEquation[currentEquation.length - 1] < 9) currentEquation.pop();
+    else {
+        newElement = parseInt(currentEquation.pop() / 10);
+        currentEquation.push(newElement);
+    }
     currentEquation.forEach(item => screen.textContent += item);
 })
 
