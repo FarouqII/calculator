@@ -8,6 +8,7 @@ const clear = document.querySelector("#clear");
 const dlt = document.querySelector("#delete");
 const operators = document.querySelectorAll(".operator");
 const numbers = document.querySelectorAll(".number");
+const decimal = document.querySelector("#decimal");
 
 //Other variables
 let equalButton = false;
@@ -15,6 +16,20 @@ let currentEquation = [];
 
 operators.forEach(button => button.addEventListener("click", () => operatorButtons(button.textContent)));
 numbers.forEach(button => button.addEventListener("click", () => numberButtons(button.textContent)));
+decimal.addEventListener("click", () => {
+    let last = currentEquation[currentEquation.length - 1];
+
+    if (!last || isNaN(last)) {
+        currentEquation.push("0.");
+        screen.textContent += "0.";
+        return;
+    }
+
+    if (!last.includes(".")) {
+        currentEquation[currentEquation.length - 1] += ".";
+        screen.textContent += ".";
+    }
+})
 equals.addEventListener("click", () => {
     if (screen.textContent == "") alert("Display empty!");
     else {
@@ -27,26 +42,34 @@ clear.addEventListener("click", () => {
     currentEquation = [];
 });
 dlt.addEventListener("click", () => {
-    screen.textContent = "";
-    if (currentEquation[currentEquation.length - 1] < 9) currentEquation.pop();
-    else {
-        newElement = parseInt(currentEquation.pop() / 10);
-        currentEquation.push(newElement);
+    if (currentEquation.length === 0) return;
+    let last = currentEquation[currentEquation.length - 1];
+
+    if (isNaN(last)) {
+        currentEquation.pop();
+    } else {
+        last = last.toString().slice(0, -1);
+
+        if (last === "" || last === "-" || last === "-0") {
+            currentEquation.pop();
+        } else {
+            currentEquation[currentEquation.length - 1] = last;
+        }
     }
-    currentEquation.forEach(item => screen.textContent += item);
-})
+
+    screen.textContent = currentEquation.join("");
+});
+
 
 function numberButtons(buttonContent) {
     if (currentEquation.length == 0) screen.textContent = "";
-    if (currentEquation.length == 0 || isNaN(Number(currentEquation[currentEquation.length - 1]))) {
-        currentEquation.push(Number(buttonContent));
+    if (currentEquation.length === 0 || isNaN(currentEquation[currentEquation.length - 1])) {
+        currentEquation.push(buttonContent);
     } else {
-        let last = currentEquation[currentEquation.length - 1];
-    currentEquation[currentEquation.length - 1] = parseInt(String(last) + String(Number(buttonContent)));
+        currentEquation[currentEquation.length - 1] += buttonContent;
     }
     screen.textContent += buttonContent;
     console.log(currentEquation);
-    return;
 }
 
 function operatorButtons(buttonContent) {
@@ -76,24 +99,24 @@ function operatorButtons(buttonContent) {
 
 function calculate(one, two, operator) {
     if (currentEquation.length == 3) {
-        operandOne = parseInt(one);
-        operandTwo = parseInt(two);
+        let operandOne = parseFloat(one);
+        let operandTwo = parseFloat(two);
         switch (operator) {
             case ('+'):
                 result = operandOne + operandTwo;
                 console.log("result is " + result);
                 screen.textContent = result;
-                currentEquation = [result];
+                currentEquation = [result.toString()];
                 break;
             case ('-'):
                 result = operandOne - operandTwo;
                 screen.textContent = result;
-                currentEquation = [result];
+                currentEquation = [result.toString()];
                 break;
             case ('×'):
                 result = operandOne * operandTwo;
                 screen.textContent = result;
-                currentEquation = [result];
+                currentEquation = [result.toString()];
                 break;
             case ('÷'):
                 if (operandTwo == 0) {
@@ -102,9 +125,9 @@ function calculate(one, two, operator) {
                 }
                 else {
                     result = operandOne / operandTwo;
-                screen.textContent = result;
-                currentEquation = [result];
-                break;
+                    screen.textContent = result;
+                    currentEquation = [result.toString()];
+                    break;
                 }
         }
     }
